@@ -2,7 +2,7 @@ package br.com.wealth.core.services;
 
 
 
-import br.com.wealth.core.dto.UserRegistrationDto;
+import br.com.wealth.core.dto.UserRegistrationDTO;
 import br.com.wealth.core.entities.Role;
 import br.com.wealth.core.entities.User;
 import br.com.wealth.core.repositories.UserRepository;
@@ -25,7 +25,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public User registerUser(UserRegistrationDto userDto) {
+    public User registerUser(UserRegistrationDTO userDto) {
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new IllegalArgumentException("E-mail já registrado"); //todo: verificar porque esta mensagem não está caindo no exception handler
         }
@@ -38,27 +38,39 @@ public class UserService {
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
+        Set<Role> roles = getRoles(userDto);
+
+        // Atribui as roles ao usuário
+        user.setRoles(roles);
+
+
+        return userRepository.save(user);
+    }
+
+    private static Set<Role> getRoles(UserRegistrationDTO userDto) {
         Role role = new Role();
-        role.setRoleId(userDto.getRole().getRoleId());;  // Use o ID correto da role no banco
+        role.setRoleId(userDto.getRole().getRoleId());
 
         // Adiciona a Role ao Set<Role>
         Set<Role> roles = new HashSet<>();
         roles.add(role);
 
-        // Atribui as roles ao usuário
-        user.setRoles(roles);
+        if(role.getRoleId() == 1L) {
+            Role roleTeamAdmin = new Role();
+            roleTeamAdmin.setRoleId(2L);
+            roles.add(roleTeamAdmin);
 
-        User savedUser = userRepository.save(user);
-
-        if(role.getRoleId() == 6L) {
-//            actionmakerService.createActionMaker(savedUser);
+            Role roleFinancialAdvisor = new Role();
+            roleFinancialAdvisor.setRoleId(3L);
+            roles.add(roleFinancialAdvisor);
         }
 
-        if(role.getRoleId() == 4L) {
-//            promoterService.createPromoter(savedUser);
+        if(role.getRoleId() == 2L) {
+            Role roleFinancialAdvisor = new Role();
+            roleFinancialAdvisor.setRoleId(3L);
+            roles.add(roleFinancialAdvisor);
         }
-
-        return savedUser;
+        return roles;
     }
 
     public Optional<User> findByEmail(String email) {

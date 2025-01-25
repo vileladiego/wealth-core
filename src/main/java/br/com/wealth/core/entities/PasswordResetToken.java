@@ -1,4 +1,4 @@
-package br.com.wealth.core.repositories;
+package br.com.wealth.core.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

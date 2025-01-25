@@ -2,7 +2,7 @@ package br.com.wealth.core.services;
 
 
 import br.com.wealth.core.entities.User;
-import br.com.wealth.core.repositories.PasswordResetToken;
+import br.com.wealth.core.entities.PasswordResetToken;
 import br.com.wealth.core.repositories.PasswordResetTokenRepository;
 import br.com.wealth.core.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

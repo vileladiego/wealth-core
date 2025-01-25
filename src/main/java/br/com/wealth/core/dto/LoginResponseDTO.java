@@ -1,8 +1,8 @@
 package br.com.wealth.core.dto;
 
-public record   LoginResponseDto(
+public record LoginResponseDTO(
         String accessToken,
         Long expiresIn,
-        UserResponseDto user,
+        UserResponseDTO user,
         Long personaId) {
 }

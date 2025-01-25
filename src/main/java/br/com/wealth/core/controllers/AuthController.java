@@ -1,8 +1,8 @@
 package br.com.wealth.core.controllers;
 
 
-import br.com.wealth.core.dto.LoginResponseDto;
-import br.com.wealth.core.dto.UserRegistrationDto;
+import br.com.wealth.core.dto.LoginResponseDTO;
+import br.com.wealth.core.dto.UserRegistrationDTO;
 import br.com.wealth.core.entities.User;
 import br.com.wealth.core.services.AuthService;
 import br.com.wealth.core.services.UserService;
@@ -24,12 +24,12 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@Valid @RequestBody UserRegistrationDto userDto) {
+    public ResponseEntity<User> registerUser(@Valid @RequestBody UserRegistrationDTO userDto) {
         return ResponseEntity.ok(userService.registerUser(userDto));//todo: fazer mapper para o dto
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(Authentication authentication) {
+    public ResponseEntity<LoginResponseDTO> login(Authentication authentication) {
         return ResponseEntity.ok().body(authService.authenticate(authentication));
     }
 

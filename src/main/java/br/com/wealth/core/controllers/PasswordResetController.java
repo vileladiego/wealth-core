@@ -1,7 +1,7 @@
 package br.com.wealth.core.controllers;
 
 
-import br.com.wealth.core.dto.MessageResponseDto;
+import br.com.wealth.core.dto.MessageResponseDTO;
 import br.com.wealth.core.services.PasswordResetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +19,10 @@ public class PasswordResetController {
     public ResponseEntity<?> forgotPassword(@RequestParam String email) {
         try {
             passwordResetService.createPasswordResetTokenForUser(email);
-            return ResponseEntity.ok().body(new MessageResponseDto("Email de recuperação enviado"));
+            return ResponseEntity.ok().body(new MessageResponseDTO("Email de recuperação enviado"));
         } catch (UsernameNotFoundException e) {
             // Por segurança, não revelamos se o email existe ou não
-            return ResponseEntity.ok().body(new MessageResponseDto("Se o email existir, você receberá as instruções"));
+            return ResponseEntity.ok().body(new MessageResponseDTO("Se o email existir, você receberá as instruções"));
         }
     }
 
@@ -32,9 +32,9 @@ public class PasswordResetController {
             @RequestParam String newPassword) {
         try {
             passwordResetService.resetPassword(token, newPassword);
-            return ResponseEntity.ok().body(new MessageResponseDto("Senha alterada com sucesso"));
+            return ResponseEntity.ok().body(new MessageResponseDTO("Senha alterada com sucesso"));
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(new MessageResponseDto(e.getMessage()));
+            return ResponseEntity.badRequest().body(new MessageResponseDTO(e.getMessage()));
         }
     }
 

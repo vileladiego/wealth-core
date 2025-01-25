@@ -1,6 +1,6 @@
 package br.com.wealth.core.dto;
 
-public record UserResponseDto(
+public record UserResponseDTO(
         Long userId,
         String username,
         String roles

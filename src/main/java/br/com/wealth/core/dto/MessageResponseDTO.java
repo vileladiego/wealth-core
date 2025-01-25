@@ -1,9 +1,9 @@
 package br.com.wealth.core.dto;
 
-public class MessageResponseDto {
+public class MessageResponseDTO {
     private String message;
 
-    public MessageResponseDto(String message) {
+    public MessageResponseDTO(String message) {
         this.message = message;
     }
 

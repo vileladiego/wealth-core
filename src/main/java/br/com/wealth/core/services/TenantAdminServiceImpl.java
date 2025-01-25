@@ -57,18 +57,12 @@ public class TenantAdminServiceImpl implements TenantAdminService {
         TenantAdmin existingEntity = tenantAdminRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("TenantAdmin not found with id: " + id));
 
-        updateFieldIfNotNull(tenantAdminDTO.getCnpj(), existingEntity::setCnpj);
-        updateFieldIfNotNull(tenantAdminDTO.getAddress(), existingEntity::setAddress);
-        updateFieldIfNotNull(tenantAdminDTO.getActive(), existingEntity::setActive);
+        existingEntity.setCnpj(tenantAdminDTO.getCnpj() != null ? tenantAdminDTO.getCnpj() : existingEntity.getCnpj());
+        existingEntity.setAddress(tenantAdminDTO.getAddress() != null ? tenantAdminDTO.getAddress() : existingEntity.getAddress());
+        existingEntity.setActive(tenantAdminDTO.getActive() != null ? tenantAdminDTO.getActive() : existingEntity.getActive());
 
         TenantAdmin updatedEntity = tenantAdminRepository.save(existingEntity);
         return tenantAdminMapper.toDTO(updatedEntity);
-    }
-
-    private <T> void updateFieldIfNotNull(T fieldValue, java.util.function.Consumer<T> setter) {
-        if (fieldValue != null) {
-            setter.accept(fieldValue);
-        }
     }
 
     @Override
